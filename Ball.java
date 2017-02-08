@@ -26,7 +26,7 @@ public class Ball
 	private double ySpeed;
 
     private double GRAVITY = 0.2;
-    private double FRICTION = 0.9;
+    private double friction = 0.9;
 	/**
 	 * Obtains the current position of this Ball.
 	 * @return the X coordinate of this Ball within the GameArena.
@@ -118,15 +118,23 @@ public class Ball
         {
 			xSpeed = -xSpeed;
 		    xPosition += xSpeed;
-            xSpeed = xSpeed * FRICTION;
+            xSpeed = xSpeed * friction;
         }
 
 		if (yPosition > maxY || yPosition < 0)
         {
 			ySpeed = -ySpeed;
 		    yPosition += ySpeed;
-            ySpeed = ySpeed * FRICTION;
+            ySpeed = ySpeed * friction;
         }
+	}
+	
+	public void setFriction(double friction){
+			this.friction = friction;
+	}
+	
+	public double getFriction(){
+		return friction;
 	}
 
 	public void gravity(double maxX, double maxY)
