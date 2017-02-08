@@ -50,24 +50,37 @@ public class BallEater
 	
 	
 	public String getColour(){
-		return components[BODY].getColour();
+		return body.getColour();
 	}
 	
 	public double getSize(){
-		return components[BODY].getSize();
+		return body.getSize();
 	}
 	
 	public double getXPosition(){
-		return components[BODY].getXPosition();
+		return body.getXPosition();
 	}
 	
 	public double getYPosition(){
-		return components[BODY].getYPosition();
+		return body.getYPosition();
 	}
 	
 	public void setXPosition(double x){
-		
-				
+		body.setXPosition(x);
+		leftEye.setXPosition(x-diameter/2);
+		leftPupil.setXPosition(x-diameter/2);
+		rightEye.setXPosition(x+diameter/2);
+		rightPupil.setXPosition(x+diameter/2);
+		mouth.setXPosition(x);				
+	}
+
+	public void setYPosition(double y){
+		body.setYPosition(y);
+		leftEye.setYPosition(y-diameter/2);
+		leftPupil.setYPosition(y-diameter/2);
+		rightEye.setYPosition(y-diameter/2);
+		rightPupil.setYPosition(y-diameter/2);
+		mouth.setYPosition(y+diameter/2);						
 	}
 	
 	public void setXSpeed(double xSpeed){
@@ -93,11 +106,15 @@ public class BallEater
 	}
 	
 	public void move(){
-		
+		for(Ball b : components){
+			b.move();
+		}
 	}
 	
-	public void bounce(){
-		
+	public void bounce(double maxX,double maxY){
+		for(int i=0;i<6;i++){
+			components[i].bounce(maxX,maxY);
+		}		
 	}
 	
 }
