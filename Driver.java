@@ -7,6 +7,7 @@ public class Driver{
 		Ball[] ball = new Ball[100];
 		GameArena arena = new GameArena(xSize,ySize);
 		BallEater eater = new BallEater(30,30,20,"BLUE","YELLOW");
+		eater.addToGameArena(arena);
 		
 		//stolen from Joe's sample 7
 		Random random = new Random();
@@ -28,7 +29,7 @@ public class Driver{
 		while(true){
 			arena.pause();
 			for(int i=0;i<ball.length;i++){
-				ball[i].move();
+				ball[i].bounce(arena.getArenaWidth(),arena.getArenaHeight());
 			}
 		
 			if(arena.leftPressed()){
@@ -47,7 +48,8 @@ public class Driver{
 				double ySpeed = Math.abs(eater.getYSpeed());
 				eater.setYSpeed(ySpeed);
 			}
-			eater.move();
+			eater.bounce(arena.getArenaWidth(),arena.getArenaHeight());
+		
 		
 		
 		}		
