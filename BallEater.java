@@ -16,6 +16,8 @@ public class BallEater
 	private double xSpeed = 1;
 	private double ySpeed = 1;
 	
+	private GameArena arena;
+	
 	private Ball body;
 	private Ball leftEye;
 	private Ball leftPupil;
@@ -47,6 +49,13 @@ public class BallEater
 		components[MOUTH] = mouth;		
 	}
 
+	public void addToGameArena(GameArena arena){
+		this.arena = arena;
+		
+		for(Ball b : components){
+			arena.addBall(b);
+		}
+	}
 	
 	
 	public String getColour(){
