@@ -4,6 +4,10 @@ public class Driver{
 		int level = 1;
 		String eaterColour = "BLUE";
 		
+		System.out.println("BALL EATER");
+		System.out.println("Help the BallEater eat the balls that match its colour...");
+		System.out.println("Level 1");
+		
 		int maxLevel = 12;
 		int xSize=600,ySize=600;
 		GameArena arena = new GameArena(xSize,ySize);
@@ -13,7 +17,17 @@ public class Driver{
 		BallFactory ballFactory = new BallFactory(level,eaterColour);
 		ballFactory.generateBalls(arena);		
 				
-		while(!ballFactory.checkCollision(eater)){
+		while(ballFactory.checkCollision(eater)!=-1){
+			if(ballFactory.checkCollision(eater)==0){
+				level++;
+				if(level<=12)
+					System.out.println("Congratulations, you won! Moving up to level "+level);
+				else
+					System.out.println("Congratulations, you won!");					
+				
+				ballFactory.changeLevel(level);
+				ballFactory.resetBalls();
+			}
 			arena.pause();
 			ballFactory.bounce();
 		
@@ -38,7 +52,8 @@ public class Driver{
 		}		
 		
 		System.out.println("Game over");
-				
+
+		arena.exit();
 				
 	}
 

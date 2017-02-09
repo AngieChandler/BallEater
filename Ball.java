@@ -163,4 +163,8 @@ public class Ball
         bounce(maxX, maxY);
 
     }
+	
+	public void display(){
+			System.out.println("Ball: colour="+colour+", x="+xPosition+", y="+yPosition+", diameter="+size); 	
+	}
 }

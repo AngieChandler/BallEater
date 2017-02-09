@@ -123,7 +123,15 @@ public class BallEater
 	public void bounce(double maxX,double maxY){
 		for(int i=0;i<6;i++){
 			components[i].bounce(maxX,maxY);
+			if(i==BODY && components[BODY]!=null){
+				x = components[BODY].getXPosition();				
+				y = components[BODY].getYPosition();
+			}
 		}		
+	}
+	
+	public void display(){
+		System.out.println("BallEater: colour="+bodyCol+", eyes="+eyeCol+", x="+x+", y="+y+", diameter="+diameter); 
 	}
 	
 }
