@@ -59,22 +59,19 @@ public class BallEater
 	
 	
 	public String getColour(){
-		if(body!=null)
-			return body.getColour();
-		System.out.println("error: no BallEater body yet!");
-		return "BLACK";
+		return bodyCol;
 	}
 	
 	public double getSize(){
-		return body.getSize();
+		return diameter;
 	}
 	
 	public double getXPosition(){
-		return body.getXPosition();
+		return x;
 	}
 	
-	public double getYPosition(){
-		return body.getYPosition();
+	public double getYPosition(){		
+		return y;
 	}
 	
 	public void setXPosition(double x){
