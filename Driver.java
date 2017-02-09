@@ -15,7 +15,12 @@ public class Driver{
 		eater.addToGameArena(arena);
 		
 		BallFactory ballFactory = new BallFactory(level,eaterColour);
-		ballFactory.generateBalls(arena);		
+		ballFactory.generateBalls(arena);
+
+		//check for starting with a ball on top of player
+		while(ballFactory.checkCollision(eater)==-1){
+			ballFactory.resetBalls();
+		}		
 				
 		while(ballFactory.checkCollision(eater)!=-1){
 			if(ballFactory.checkCollision(eater)==0){
@@ -27,6 +32,11 @@ public class Driver{
 				
 				ballFactory.changeLevel(level);
 				ballFactory.resetBalls();
+				
+				//make sure the player doesn't start with a collision
+				while(ballFactory.checkCollision(eater)==-1){
+					ballFactory.resetBalls();
+				}		
 			}
 			arena.pause();
 			ballFactory.bounce();
