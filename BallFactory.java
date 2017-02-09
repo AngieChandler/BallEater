@@ -55,9 +55,14 @@ public class BallFactory{
 	public void resetBalls(){
 		//remove existing balls
 		for(int i=0;i<maxBalls;i++){
-			ball[i].setColour("BLACK");
-			arena.removeBall(ball[i]);
+			//ball[i].setColour("BLACK");
+			if(!ball[i].getEaten())
+				arena.removeBall(ball[i]);
+			arena.pause();
+			ball[i] = null;
 		}		
+		
+		arena.pause();
 		
 		//add new ones
 		generateBalls(arena);
@@ -66,7 +71,7 @@ public class BallFactory{
 
 	public int checkCollision(BallEater b){
 		for(int i=0;i<maxBalls;i++){
-			if(ball[i].getSize()>0){
+			if(!ball[i].getEaten()){
 				double dist = Math.sqrt((ball[i].getXPosition() - b.getXPosition())*(ball[i].getXPosition() - b.getXPosition()) + (ball[i].getYPosition() - b.getYPosition())*(ball[i].getYPosition() - b.getYPosition()));
 
 				if(dist < (b.getSize() + ball[i].getSize())){
@@ -85,15 +90,17 @@ public class BallFactory{
 
 	public void checkCollision(Ball b){
 		for(int i=0;i<maxBalls;i++){
-			if(!ball[i].equals(b) && ball[i].getSize() > 0)
+			if(!ball[i].equals(b) && !ball[i].getEaten())
 				b.collision(ball[i]);
 		}		
 	}
 	
 	
 	private void removeBall(int no){
-		ball[no].setColour("BLACK");
-		ball[no].setSize(0);
+		ball[no].setColour("#123456");
+		//ball[no].setSize(0);
+		ball[no].setEaten(true);
+		arena.removeBall(ball[no]);
 	}
 	
 	private int ballsRemaining(){
@@ -115,7 +122,7 @@ public class BallFactory{
 	
 	public void bounce(){
 		for(int i=0;i<maxBalls;i++){
-			if(ball[i].getSize() > 0){
+			if(!ball[i].getEaten()){
 				ball[i].bounce(arena.getArenaWidth(),arena.getArenaHeight());
 				checkCollision(ball[i]);
 			}

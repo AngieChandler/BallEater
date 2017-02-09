@@ -31,6 +31,9 @@ public class Ball
 	 * Obtains the current position of this Ball.
 	 * @return the X coordinate of this Ball within the GameArena.
 	 */
+	private boolean isEaten; 
+	 
+	 
 	public double getXPosition()
 	{
 		return xPosition;
@@ -99,6 +102,8 @@ public class Ball
 
 		size = diameter;
 		colour = col;
+		
+		isEaten = false;
 	}	
 
     public void setXSpeed(double speed)
@@ -167,4 +172,13 @@ public class Ball
 	public void display(){
 			System.out.println("Ball: colour="+colour+", x="+xPosition+", y="+yPosition+", diameter="+size); 	
 	}
+
+	public void setEaten(boolean isEaten){
+		this.isEaten = isEaten;
+	}
+	public boolean getEaten(){
+		return isEaten;
+	}
+	
+	
 }
