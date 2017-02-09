@@ -72,6 +72,10 @@ public class Ball
 		return size;
 	}
 
+	public void setSize(double size){
+		this.size = size;
+	}
+	
 	/**
 	 * Obtains the colour of this Ball.
 	 * @return a textual description of the colour of this Ball.
@@ -80,7 +84,9 @@ public class Ball
 	{
 		return colour;
 	}
-
+	public void setColour(String colour){
+		this.colour = colour;
+	}
 
 	/******************************************************/
 
