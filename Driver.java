@@ -11,9 +11,9 @@ public class Driver{
 		eater.addToGameArena(arena);
 		
 		BallFactory ballFactory = new BallFactory(level,eaterColour);
-		ballFactory.generateBalls(arena);
+		ballFactory.generateBalls(arena);		
 				
-		while(true){
+		while(!ballFactory.checkCollision(eater)){
 			arena.pause();
 			ballFactory.bounce();
 		
@@ -34,9 +34,10 @@ public class Driver{
 				eater.setYSpeed(ySpeed);
 			}
 			eater.bounce(arena.getArenaWidth(),arena.getArenaHeight());	
-		
+			
 		}		
 		
+		System.out.println("Game over");
 				
 				
 	}

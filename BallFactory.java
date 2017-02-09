@@ -48,6 +48,32 @@ public class BallFactory{
 	
 	}
 
+
+	public boolean checkCollision(BallEater b){
+		for(int i=0;i<maxBalls;i++){
+			if(ball[i].getSize()>0){
+				double dist = Math.sqrt((ball[i].getXPosition() - b.getXPosition())*(ball[i].getXPosition() - b.getXPosition()) + (ball[i].getYPosition() - b.getYPosition())*(ball[i].getYPosition() - b.getYPosition()));
+	
+				if(dist < (b.getSize() + ball[i].getSize())){
+					if(ball[i].getColour().equals(targetColour))
+						removeBall(i);
+					
+					return true;						
+				}				
+			}
+		}
+		
+		return false;
+	}
+
+	public void checkCollision(Ball b){
+		for(int i=0;i<maxBalls;i++){
+			if(!ball[i].equals(b) && ball[i].getSize() > 0)
+				b.collision(ball[i]);
+		}		
+	}
+	
+	
 	public void removeBall(int no){
 		ball[no].setColour("BLACK");
 		ball[no].setSize(0);
@@ -70,7 +96,10 @@ public class BallFactory{
 	
 	public void bounce(){
 		for(int i=0;i<maxBalls;i++){
-			ball[i].bounce(arena.getArenaWidth(),arena.getArenaHeight());
+			if(ball[i].getSize() > 0){
+				ball[i].bounce(arena.getArenaWidth(),arena.getArenaHeight());
+				checkCollision(ball[i]);
+			}
 		}
 	
 	}

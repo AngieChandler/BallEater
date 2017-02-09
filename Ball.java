@@ -19,8 +19,8 @@ public class Ball
                                         // RGB values in the format #RRGGBB. e.g.
                                         //
                                         // Pure red is FF0000
-                                        // Pure red is 00FF00
-                                        // Pure red is 0000FF
+                                        // Pure green is 00FF00
+                                        // Pure blue is 0000FF
 
 	private double xSpeed;
 	private double ySpeed;
@@ -134,6 +134,20 @@ public class Ball
             ySpeed = ySpeed * friction;
         }
 	}
+	
+	public void collision(Ball b){
+		double dist = Math.sqrt((xPosition - b.getXPosition())*(xPosition - b.getXPosition()) + (yPosition - b.getYPosition())*(yPosition - b.getYPosition()));
+
+		if(dist < (size + b.getSize())){
+			//there is a collision, change direction - should be according to angle of impact (later)
+			//for now, change the direction that was hit
+			if(Math.abs(xPosition - b.getXPosition()) < (size + b.getSize()))
+				xSpeed = - xSpeed;
+			else
+				ySpeed = - ySpeed;			
+		}		
+	}
+
 	
 	public void setFriction(double friction){
 			this.friction = friction;
