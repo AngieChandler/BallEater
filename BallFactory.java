@@ -24,7 +24,7 @@ public class BallFactory{
 		double maxSpeed = level;		
 		maxBalls = ballsPerLevel[level];
 		ball = new Ball[maxBalls];
-		int size = (int)(400/maxBalls);
+		int size = (int)(300.0/(double)maxBalls);
 		
 		//stolen from Joe's sample 7
 		Random random = new Random();
@@ -48,22 +48,39 @@ public class BallFactory{
 	
 	}
 
+	public void changeLevel(int level){
+		this.level = level;
+	}
+	
+	public void resetBalls(){
+		//remove existing balls
+		for(int i=0;i<maxBalls;i++){
+			ball[i].setColour("BLACK");
+			arena.removeBall(ball[i]);
+		}		
+		
+		//add new ones
+		generateBalls(arena);
+	}
+	
 
-	public boolean checkCollision(BallEater b){
+	public int checkCollision(BallEater b){
 		for(int i=0;i<maxBalls;i++){
 			if(ball[i].getSize()>0){
 				double dist = Math.sqrt((ball[i].getXPosition() - b.getXPosition())*(ball[i].getXPosition() - b.getXPosition()) + (ball[i].getYPosition() - b.getYPosition())*(ball[i].getYPosition() - b.getYPosition()));
-	
+
 				if(dist < (b.getSize() + ball[i].getSize())){
-					if(ball[i].getColour().equals(targetColour))
+					if(ball[i].getColour().equals(targetColour)){
 						removeBall(i);
+						return ballsRemaining();						
+					}
+					return -1;
 					
-					return true;						
 				}				
 			}
 		}
 		
-		return false;
+		return ballsRemaining();
 	}
 
 	public void checkCollision(Ball b){
@@ -74,17 +91,19 @@ public class BallFactory{
 	}
 	
 	
-	public void removeBall(int no){
+	private void removeBall(int no){
 		ball[no].setColour("BLACK");
 		ball[no].setSize(0);
-		
+	}
+	
+	private int ballsRemaining(){
 		int ballsToGo = 0;
 		for(int i=0;i<maxBalls;i++){
 			if(ball[i].getColour().equals(targetColour))
 				ballsToGo++;
 		}
 		
-		System.out.println(ballsToGo+" remaining");
+		return ballsToGo;
 	}
 
 	
