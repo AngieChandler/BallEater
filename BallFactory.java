@@ -8,11 +8,23 @@ public class BallFactory{
 	Ball[] ball;
 	String targetColour;
 	int maxBalls = 100;
+	double baseSize = 300.0;
 	int[] ballsPerLevel = {3,5,8,10,18,26,33,45,58,70,85,100};
+
 	
 	public BallFactory(int level,String targetColour){
 		this.level = level;
 		this.targetColour = targetColour;
+	}
+	
+	public BallFactory(int level,String targetColour,boolean isKids){
+		this.level = level;
+		this.targetColour = targetColour;
+		
+		for(int i=0;i<ballsPerLevel.length;i++){
+			ballsPerLevel[i] = i+1;
+		}
+		baseSize = 50.0;
 	}
 
 	public void generateBalls(GameArena arena){
@@ -24,7 +36,7 @@ public class BallFactory{
 		double maxSpeed = level;		
 		maxBalls = ballsPerLevel[level];
 		ball = new Ball[maxBalls];
-		int size = (int)(300.0/(double)maxBalls);
+		int size = (int)(baseSize/(double)maxBalls);
 		
 		//stolen from Joe's sample 7
 		Random random = new Random();

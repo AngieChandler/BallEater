@@ -3,6 +3,7 @@ public class Driver{
 	public static void main(String[] args){
 		int level = 1;
 		String eaterColour = "BLUE";
+
 		
 		System.out.println("BALL EATER");
 		System.out.println("Help the BallEater eat the balls that match its colour...");
@@ -14,7 +15,7 @@ public class Driver{
 		BallEater eater = new BallEater(30,30,20,eaterColour,"YELLOW");
 		eater.addToGameArena(arena);
 		
-		BallFactory ballFactory = new BallFactory(level,eaterColour);
+		BallFactory ballFactory = new BallFactory(level,eaterColour,true);
 		ballFactory.generateBalls(arena);
 
 		//check for starting with a ball on top of player
