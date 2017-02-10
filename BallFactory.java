@@ -4,12 +4,13 @@ public class BallFactory{
 
 	int level; //between 1 and 12
 	GameArena arena;
-	String[] colours = {"BLUE", "RED", "YELLOW", "GREEN", "WHITE", "ORANGE", "GREY", "MAGENTA", "PINK", "CYAN", "DARKGREY", "LIGHTGREY"};
+	String[] colours = {"BLUE", "RED", "YELLOW", "GREEN", "WHITE", "ORANGE", "MAGENTA", "PINK", "CYAN"};
 	Ball[] ball;
 	String targetColour;
 	int maxBalls = 100;
 	double baseSize = 300.0;
 	int[] ballsPerLevel = {3,5,8,10,18,26,33,45,58,70,85,100};
+	Random random;
 
 	
 	public BallFactory(int level,String targetColour){
@@ -21,10 +22,13 @@ public class BallFactory{
 		this.level = level;
 		this.targetColour = targetColour;
 		
-		for(int i=0;i<ballsPerLevel.length;i++){
-			ballsPerLevel[i] = i+1;
+		if(isKids){
+			for(int i=0;i<ballsPerLevel.length;i++){
+				ballsPerLevel[i] = (i+1)*2;
+			}
+			baseSize = 100.0;
 		}
-		baseSize = 50.0;
+		random  = new Random();
 	}
 
 	public void generateBalls(GameArena arena){
@@ -89,6 +93,10 @@ public class BallFactory{
 				if(dist < (b.getSize() + ball[i].getSize())){
 					if(ball[i].getColour().equals(targetColour)){
 						removeBall(i);
+						b.chomp();
+						int ballsLeft = ballsRemaining();
+						if(level>1 && ballsLeft>0)
+							changeTargetColour(b);
 						return ballsRemaining();						
 					}
 					return -1;
@@ -100,6 +108,22 @@ public class BallFactory{
 		return ballsRemaining();
 	}
 
+	private void changeTargetColour(BallEater eater){
+		String[] countColours = new String[maxBalls];
+		for(int i=0;i<maxBalls;i++){
+			if(!ball[i].getEaten())
+				countColours[i] = ball[i].getColour();
+			else
+				countColours[i] = targetColour;
+		}
+		int newCol = (int)(random.nextDouble()*maxBalls);
+		if(!countColours[newCol].equals(targetColour))
+		{
+			targetColour = countColours[newCol];
+			eater.setColour(targetColour);
+		}
+	}
+	
 	public void checkCollision(Ball b){
 		for(int i=0;i<maxBalls;i++){
 			if(!ball[i].equals(b) && !ball[i].getEaten())
@@ -111,7 +135,7 @@ public class BallFactory{
 	private void removeBall(int no){
 		ball[no].setColour("#123456");
 		//ball[no].setSize(0);
-		ball[no].setEaten(true);
+		ball[no].isEaten();
 		arena.removeBall(ball[no]);
 	}
 	

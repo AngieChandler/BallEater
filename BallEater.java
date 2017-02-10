@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class BallEater
 {
 	public static final int BODY = 0;
@@ -26,6 +28,17 @@ public class BallEater
 	private Ball mouth;
 
 	
+	//animation variables
+	private int yawnCounter=0;
+	private int yawnMax = 10;
+	private int yawnFreq = 20;
+	private int chompCounter=0;
+	private int chompMax = 10;
+	private int winkCounter=0;
+	private int winkMax = 10;
+	private int winkFreq = 5;
+	private Random random;
+	
 	public BallEater(double x, double y, double diameter, String bodyCol, String eyeCol){
 		this.x = x;
 		this.y = y;
@@ -33,20 +46,22 @@ public class BallEater
 		this.bodyCol = bodyCol;
 		this.eyeCol = eyeCol;
 		
-		Ball body = new Ball(x,y,diameter,bodyCol);
+		body = new Ball(x,y,diameter,bodyCol);
 		components[BODY] = body; //refer to the same ball, but within an array in case we need it
 		
-		Ball leftEye = new Ball(x-diameter/2,y-diameter/2,diameter/5,eyeCol);
+		leftEye = new Ball(x-diameter/2,y-diameter/2,diameter/5,eyeCol);
 		components[LEFT_EYE] = leftEye;
-		Ball leftPupil = new Ball(x-diameter/2,y-diameter/2,diameter/10,"BLACK");
+		leftPupil = new Ball(x-diameter/2,y-diameter/2,diameter/10,"BLACK");
 		components[LEFT_PUPIL] = leftPupil;
-		Ball rightEye = new Ball(x+diameter/2,y-diameter/2,diameter/5,eyeCol);
+		rightEye = new Ball(x+diameter/2,y-diameter/2,diameter/5,eyeCol);
 		components[RIGHT_EYE] = rightEye;
-		Ball rightPupil = new Ball(x+diameter/2,y-diameter/2,diameter/10,"BLACK");
+		rightPupil = new Ball(x+diameter/2,y-diameter/2,diameter/10,"BLACK");
 		components[RIGHT_PUPIL] = rightPupil;
 				
-		Ball mouth = new Ball (x,y+diameter/2,diameter/4,"BLACK");
+		mouth = new Ball (x,y+diameter/2,diameter/4,"BLACK");
 		components[MOUTH] = mouth;		
+		
+		random = new Random();
 	}
 
 	public void addToGameArena(GameArena arena){
@@ -60,6 +75,11 @@ public class BallEater
 	
 	public String getColour(){
 		return bodyCol;
+	}
+	
+	public void setColour(String colour){
+		body.setColour(colour);
+		bodyCol = colour;
 	}
 	
 	public double getSize(){
@@ -133,5 +153,54 @@ public class BallEater
 	public void display(){
 		System.out.println("BallEater: colour="+bodyCol+", eyes="+eyeCol+", x="+x+", y="+y+", diameter="+diameter); 
 	}
+	
+	public void animation(){
+		if(chompCounter==0)
+			yawn();
+		if(yawnCounter==0)
+			wink();
+	}
+	public void chomp(){
+		System.out.println("CHOMP");
+	}
+	
+	private void yawn(){
+		if(yawnCounter == 0){
+			int guess = (int)(random.nextDouble()*yawnFreq);
+		
+			if(guess == yawnFreq){
+				System.out.println("YAWN");
+				double mouthSize = mouth.getSize();
+				mouthSize*=2;
+				mouth.setSize(mouthSize);
+				yawnCounter++;
+			}
+		}
+		else if(yawnCounter == yawnMax){
+			mouth.setSize(diameter/4);
+			yawnCounter=0;
+		}
+		else
+			yawnCounter++;
+	}
+
+	private void wink(){
+		if(winkCounter == 0){
+			int guess = (int)(random.nextDouble()*yawnFreq);
+			
+			if(guess == winkFreq){
+				//start wink
+				System.out.println("WINK");
+				winkCounter++;
+			}
+		}
+		else if(winkCounter == winkMax){
+			//end wink
+			winkCounter=0;
+		}
+		else
+			winkCounter++;
+	}
+
 	
 }

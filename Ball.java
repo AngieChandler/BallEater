@@ -173,8 +173,8 @@ public class Ball
 			System.out.println("Ball: colour="+colour+", x="+xPosition+", y="+yPosition+", diameter="+size); 	
 	}
 
-	public void setEaten(boolean isEaten){
-		this.isEaten = isEaten;
+	public void isEaten(){
+		this.isEaten = true;
 	}
 	public boolean getEaten(){
 		return isEaten;

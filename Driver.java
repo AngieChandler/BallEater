@@ -3,19 +3,21 @@ public class Driver{
 	public static void main(String[] args){
 		int level = 1;
 		String eaterColour = "BLUE";
-
+		boolean isKids = false;
+		if(args.length>0 && args[0].equals("kids"))
+			isKids = true;
 		
 		System.out.println("BALL EATER");
 		System.out.println("Help the BallEater eat the balls that match its colour...");
 		System.out.println("Level 1");
 		
 		int maxLevel = 12;
-		int xSize=600,ySize=600;
+		int xSize=1000,ySize=800;
 		GameArena arena = new GameArena(xSize,ySize);
 		BallEater eater = new BallEater(30,30,20,eaterColour,"YELLOW");
 		eater.addToGameArena(arena);
 		
-		BallFactory ballFactory = new BallFactory(level,eaterColour,true);
+		BallFactory ballFactory = new BallFactory(level,eaterColour,isKids);
 		ballFactory.generateBalls(arena);
 
 		//check for starting with a ball on top of player
@@ -59,7 +61,8 @@ public class Driver{
 				eater.setYSpeed(ySpeed);
 			}
 			eater.bounce(arena.getArenaWidth(),arena.getArenaHeight());	
-			
+
+			eater.animation();			
 		}		
 		
 		System.out.println("Game over");
