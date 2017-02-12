@@ -2,6 +2,7 @@ public class Driver{
 
 	public static void main(String[] args){
 		int level = 1;
+		int score = 0; //add a score for the player
 		String eaterColour = "BLUE";
 		boolean isKids = false;
 		if(args.length>0){
