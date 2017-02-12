@@ -38,7 +38,7 @@ public class BallFactory{
 		
 		//speed, colours and so on depend on level
 		double maxSpeed = level;		
-		maxBalls = ballsPerLevel[level];
+		maxBalls = ballsPerLevel[level-1];
 		ball = new Ball[maxBalls];
 		int size = (int)(baseSize/(double)maxBalls);
 		

@@ -4,12 +4,18 @@ public class Driver{
 		int level = 1;
 		String eaterColour = "BLUE";
 		boolean isKids = false;
-		if(args.length>0 && args[0].equals("kids"))
-			isKids = true;
+		if(args.length>0){
+			isKids = testIsKids(args[0]);
+			level = testLevel(args[0]);
+			if(args.length>1 && !isKids)
+				isKids = testIsKids(args[1]);
+			else if(args.length > 1)
+				level = testLevel(args[1]);
+		}
 		
 		System.out.println("BALL EATER");
 		System.out.println("Help the BallEater eat the balls that match its colour...");
-		System.out.println("Level 1");
+		System.out.println("Level "+level);
 		
 		int maxLevel = 12;
 		int xSize=1000,ySize=800;
@@ -71,4 +77,19 @@ public class Driver{
 				
 	}
 
+	private static boolean testIsKids(String args){
+		if(args.equals("kids"))
+			return true;
+		return false;
+	}
+	
+	//there is a parse method for this, but this avoids exceptions when the possible inputs are known
+	private static int testLevel(String args){
+		for(int i=1;i<=12;i++){
+			if(args.equals(""+i))
+				return i;
+		}
+		return 1;
+	}
+	
 }

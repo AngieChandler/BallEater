@@ -190,7 +190,7 @@ public class BallEater
 			
 			if(guess == winkFreq){
 				//start wink
-				System.out.println("WINK");
+				//System.out.println("WINK");
 				winkCounter++;
 			}
 		}
