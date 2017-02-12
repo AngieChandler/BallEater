@@ -179,6 +179,4 @@ public class Ball
 	public boolean getEaten(){
 		return isEaten;
 	}
-	
-	
 }

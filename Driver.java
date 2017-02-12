@@ -68,7 +68,7 @@ public class Driver{
 			}
 			eater.bounce(arena.getArenaWidth(),arena.getArenaHeight());	
 
-			eater.animation();			
+			//eater.animation();			
 		}		
 		
 		System.out.println("Game over");
