@@ -49,6 +49,9 @@ public class GameArena
 	private boolean down = false;
 	private boolean left = false;
 	private boolean right = false;
+	private boolean pause = false; //new extras for BallEater
+	private boolean boost = false;
+	private boolean jump = false;
 
     // JavaFX containers
     private Scene scene;
@@ -105,6 +108,13 @@ public class GameArena
                     left = true;
                 if (keyEvent.getCode() == KeyCode.RIGHT) 
                     right = true;
+				if(keyEvent.getCode() == KeyCode.P)
+					pause = true;
+				if(keyEvent.getCode() == KeyCode.B)
+					boost = true;
+				if(keyEvent.getCode() == KeyCode.J)
+					jump = true;
+					
             }
         };
 
@@ -118,6 +128,12 @@ public class GameArena
                     left = false;
                 if (keyEvent.getCode() == KeyCode.RIGHT) 
                     right = false;
+				if(keyEvent.getCode() == KeyCode.P)
+					pause = false;
+				if(keyEvent.getCode() == KeyCode.B)
+					boost = false;
+				if(keyEvent.getCode() == KeyCode.J)
+					jump = false;
             }
         };
 
@@ -384,5 +400,16 @@ public class GameArena
 	public boolean rightPressed()
 	{
 		return right;
+	}
+	
+	//extras for use in BallEater
+	public boolean boostPressed(){
+		return boost;
+	}
+	public boolean jumpPressed(){
+		return jump;
+	}
+	public boolean pausePressed(){
+		return pause;
 	}
 }

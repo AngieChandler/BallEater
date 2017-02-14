@@ -49,6 +49,11 @@ public class Driver{
 				}		
 			}
 			arena.pause();
+			if(arena.pausePressed()){
+				while(!arena.rightPressed() && !arena.leftPressed() && !arena.upPressed() && !arena.downPressed()){
+					arena.pause();
+				}
+			}
 			ballFactory.bounce();
 		
 			if(arena.leftPressed()){
