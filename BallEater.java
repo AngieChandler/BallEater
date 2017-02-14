@@ -204,4 +204,20 @@ public class BallEater
 	}
 
 	
+	public void startBoost(){
+		xSpeed+=10;
+		ySpeed+=10;
+		for(int i=0;i<components.length;i++){
+			components[i].setXSpeed(xSpeed);
+			components[i].setYSpeed(ySpeed);
+		}
+	}
+	public void endBoost(){
+		xSpeed-=10;
+		ySpeed-=10;
+		for(int i=0;i<components.length;i++){
+			components[i].setXSpeed(xSpeed);
+			components[i].setYSpeed(ySpeed);
+		}
+	}	
 }
