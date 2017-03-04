@@ -1,8 +1,16 @@
 
 import java.util.*;
 
+/**
+	This class defines and controls the BallEater object, which includes 6 separate Ball objects
+	@see Ball
+	
+	@author Angie Chandler
+*/
+
 public class BallEater
 {
+	//reference numbers for BallEater elements
 	public static final int BODY = 0;
 	public static final int LEFT_EYE = 1;
 	public static final int LEFT_PUPIL = 2;
@@ -10,6 +18,7 @@ public class BallEater
 	public static final int RIGHT_PUPIL = 4;
 	public static final int MOUTH = 5;
 
+	//array of BallEater elements and position, size and speed variables
 	private Ball[] components = new Ball[6];
 	private double x;
 	private double y;
@@ -19,8 +28,10 @@ public class BallEater
 	private double xSpeed = 1;
 	private double ySpeed = 1;
 	
+	//reference to Joe's GameArena
 	private GameArena arena;
 	
+	//the individual Balls in the BallEater - can be referenced individually or through array
 	private Ball body;
 	private Ball leftEye;
 	private Ball leftPupil;
@@ -40,6 +51,9 @@ public class BallEater
 	private int winkFreq = 5;
 	private Random random;
 	
+	/**
+	Constructor - creates an instance of the BallEater class
+	*/
 	public BallEater(double x, double y, double diameter, String bodyCol, String eyeCol){
 		this.x = x;
 		this.y = y;
@@ -65,6 +79,10 @@ public class BallEater
 		random = new Random();
 	}
 
+	/**
+	adds the BallEater elements to the GameArena
+	@param GameArena
+	*/
 	public void addToGameArena(GameArena arena){
 		this.arena = arena;
 		
@@ -73,28 +91,45 @@ public class BallEater
 		}
 	}
 	
-	
+	/**
+	 * Obtains the colour of body of this BallEater.
+	 * @return String colour
+
+	*/
 	public String getColour(){
 		return bodyCol;
 	}
 	
+	/**
+	Sets the colour of the body of this BallEater
+	@param String colour
+	*/
 	public void setColour(String colour){
 		body.setColour(colour);
 		bodyCol = colour;
 	}
-	
+	/** obtains the size of the body of this BallEater
+	@return double diameter in pixels*/
 	public double getSize(){
 		return diameter;
 	}
 	
+	/** obtains the x position of this BallEater
+	@return double x coordinate of the BallEater within the GameArena
+	*/
 	public double getXPosition(){
 		return x;
 	}
-	
+	/** obtains the y position of this BallEater
+	@return double y coordinate of the BallEater within the GameArena
+	*/
 	public double getYPosition(){		
 		return y;
 	}
-	
+	/**
+	 * Moves the current position of this BallEater to the given co-ordinates
+	 * @param x the new x co-ordinate of this BallEater
+	 */
 	public void setXPosition(double x){
 		body.setXPosition(x);
 		leftEye.setXPosition(x-diameter/2);
@@ -104,6 +139,10 @@ public class BallEater
 		mouth.setXPosition(x);				
 	}
 
+	/**
+	 * Moves the current position of this BallEater to the given co-ordinates
+	 * @param y the new y co-ordinate of this BallEater
+	 */
 	public void setYPosition(double y){
 		body.setYPosition(y);
 		leftEye.setYPosition(y-diameter/2);
@@ -112,18 +151,28 @@ public class BallEater
 		rightPupil.setYPosition(y-diameter/2);
 		mouth.setYPosition(y+diameter/2);						
 	}
-	
+	/**
+	 * Updates the current speed of this BallEater
+	 * @param xSpeed the new x speed of this BallEater
+	 */	
 	public void setXSpeed(double xSpeed){
 		this.xSpeed = xSpeed;
 		for(int i=0;i<components.length;i++){
 			components[i].setXSpeed(xSpeed);
 		}
 	}
-	
+
+	/** obtain the current xSpeed of this BallEater
+	@return xSpeed
+	*/
 	public double getXSpeed(){
 		return xSpeed;
 	}
 	
+	/**
+	 * Updates the current speed of this BallEater
+	 * @param xSpeed the new x speed of this BallEater
+	 */	
 	public void setYSpeed(double ySpeed){
 		this.ySpeed = ySpeed;
 		for(int i=0;i<components.length;i++){
@@ -131,16 +180,24 @@ public class BallEater
 		}		
 	}
 	
+	/** obtain the current ySpeed of this BallEater
+	@return ySpeed
+	*/
 	public double getYSpeed(){
 		return ySpeed;		
 	}
 	
+	/** makes this BallEater to move according to the current speed
+	*/
 	public void move(){
 		for(Ball b : components){
 			b.move();
 		}
 	}
 	
+	/** makes this BallEater move according to the current speed, and bounce if the edge is hit
+	@param maxX, maxY define the edge of the area
+	*/
 	public void bounce(double maxX,double maxY){
 		for(int i=0;i<6;i++){
 			components[i].bounce(maxX,maxY);
@@ -151,10 +208,14 @@ public class BallEater
 		}		
 	}
 	
+	/** display the colour and size settings of this BallEater
+	*/
 	public void display(){
 		System.out.println("BallEater: colour="+bodyCol+", eyes="+eyeCol+", x="+x+", y="+y+", diameter="+diameter); 
 	}
 	
+/*
+//incomplete, animation of BallEater
 	public void animation(){
 		if(chompCounter==0)
 			yawn();
@@ -202,8 +263,10 @@ public class BallEater
 		else
 			winkCounter++;
 	}
-
+*/
 	
+	/** speeds this BallEater up for a given period of time
+	*/
 	public void startBoost(){
 		xSpeed+=10;
 		ySpeed+=10;
@@ -212,6 +275,9 @@ public class BallEater
 			components[i].setYSpeed(ySpeed);
 		}
 	}
+	
+	/** returns this BallEater to normal speed
+	*/
 	public void endBoost(){
 		xSpeed-=10;
 		ySpeed-=10;

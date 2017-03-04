@@ -1,9 +1,18 @@
 import java.util.*;
 
+/**
+This class generates and controls all Balls on the GameArena when playing BallEater
+	@see BallEater
+	@see Ball
+	@see GameArena
+	
+	@author Angie Chandler
+*/
 public class BallFactory{
 
 	int level; //between 1 and 12
 	GameArena arena;
+	BallEaterGame game;
 	String[] colours = {"BLUE", "RED", "YELLOW", "GREEN", "WHITE", "ORANGE", "MAGENTA", "PINK", "CYAN"};
 	Ball[] ball;
 	String targetColour;
@@ -12,12 +21,22 @@ public class BallFactory{
 	int[] ballsPerLevel = {3,5,8,10,18,26,33,45,58,70,85,100};
 	Random random;
 
-	
+	/**
+	constructor, generates a new BallFactory with a given level and BallEater colour (target colour)
+	@param level, the game's current level (int 1-11) 
+	@param targetColour, String representing the colour that the BallEater is able to eat
+	*/
 	public BallFactory(int level,String targetColour){
 		this.level = level;
 		this.targetColour = targetColour;
 	}
 	
+	/**
+	constructor, generates a new (easier) BallFactory for kids with a given level and BallEater colour (target colour)
+	@param level, the game's current level (int 1-11)
+	@param targetColour, String representing the colour that the BallEater is able to eat
+	@param isKids, boolean declaring whether the game is in kids' mode
+	*/
 	public BallFactory(int level,String targetColour,boolean isKids){
 		this.level = level;
 		this.targetColour = targetColour;
@@ -31,6 +50,27 @@ public class BallFactory{
 		random  = new Random();
 	}
 
+	
+	public BallFactory(BallEaterGame game){
+		this.game = game;
+		this.level = game.getLevel();
+		this.targetColour = (game.getBallEater()).getColour();
+		
+		if(game.getIsKids()){
+			for(int i=0;i<ballsPerLevel.length;i++){
+				ballsPerLevel[i] = (i+1)*2;
+			}
+			baseSize = 100.0;
+		}
+		random  = new Random();
+		
+	}
+	
+	
+	/**
+	generates the balls for this level and adds them to the GameArena
+	@param arena, the GameArena
+	*/
 	public void generateBalls(GameArena arena){
 		String ballColour;
 
@@ -64,10 +104,17 @@ public class BallFactory{
 	
 	}
 
+	/**
+	changes the current level of this BallEater game
+	@param level, integer between 1 and 11.
+	*/
 	public void changeLevel(int level){
 		this.level = level;
 	}
 	
+	/**
+	resets the Balls in the GameArena, removing the existing ones and generating new ones
+	*/
 	public void resetBalls(){
 		//remove existing balls
 		for(int i=0;i<maxBalls;i++){
@@ -84,7 +131,11 @@ public class BallFactory{
 		generateBalls(arena);
 	}
 	
-
+	/**
+	checks for collisions between Balls and BallEater and responds to these collisions.
+	@param b, the BallEater to check against
+	@return ballsRemaining
+	*/
 	public int checkCollision(BallEater b){
 		for(int i=0;i<maxBalls;i++){
 			if(!ball[i].getEaten()){
@@ -93,7 +144,8 @@ public class BallFactory{
 				if(dist < (b.getSize() + ball[i].getSize())){
 					if(ball[i].getColour().equals(targetColour)){
 						removeBall(i);
-						b.chomp();
+						game.addBallEatenScore();
+						//b.chomp(); //animation - incomplete
 						int ballsLeft = ballsRemaining();
 						if(level>1 && ballsLeft>0)
 							changeTargetColour(b);
@@ -108,6 +160,10 @@ public class BallFactory{
 		return ballsRemaining();
 	}
 
+	/**
+	Changes the target colour (and the colour of the BallEater)
+	@param b, the BallEater in the game
+	*/
 	private void changeTargetColour(BallEater eater){
 		String[] countColours = new String[maxBalls];
 		for(int i=0;i<maxBalls;i++){
@@ -124,6 +180,11 @@ public class BallFactory{
 		}
 	}
 	
+	
+	/**
+	checks for collisions between Balls and responds to these collisions. Note that collisions between Balls do not obey proper laws of physics!
+	@param b, the Ball object to check against
+	*/
 	public void checkCollision(Ball b){
 		for(int i=0;i<maxBalls;i++){
 			if(!ball[i].equals(b) && !ball[i].getEaten())
@@ -131,7 +192,11 @@ public class BallFactory{
 		}		
 	}
 	
-	
+
+	/**
+	removes a Ball from the GameArena when it is eaten
+	@param no, the integer representing the Ball to remove
+	*/
 	private void removeBall(int no){
 		ball[no].setColour("#123456");
 		//ball[no].setSize(0);
@@ -139,6 +204,10 @@ public class BallFactory{
 		arena.removeBall(ball[no]);
 	}
 	
+	/**
+	counts how many balls of the target colour remain to be eaten
+	@return the number of balls of the correct colour remaining
+	*/
 	private int ballsRemaining(){
 		int ballsToGo = 0;
 		for(int i=0;i<maxBalls;i++){
@@ -149,13 +218,18 @@ public class BallFactory{
 		return ballsToGo;
 	}
 
-	
+	/**
+	moves the Balls in this BallFactory according to their current speed
+	*/
 	public void move(){
 		for(int i=0;i<maxBalls;i++){
 			ball[i].move();
 		}
 	}
 	
+	/**
+	moves the balls in this BallFactory and checks for collisions against the edge of the GameArena, and other balls.
+	*/
 	public void bounce(){
 		for(int i=0;i<maxBalls;i++){
 			if(!ball[i].getEaten()){

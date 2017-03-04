@@ -22,10 +22,10 @@ public class Rectangle
                                         // Pure red is FF0000
                                         // Pure red is 00FF00
                                         // Pure red is 0000FF
-	private double xSpeed;
-	private double ySpeed;
+	private double xSpeed;				
+	private double ySpeed;			
 
-    private double GRAVITY = 0.2;
+    private double GRAVITY = 0.2;		 
     private double FRICTION = 0.9;
 
 
