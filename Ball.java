@@ -194,20 +194,28 @@ public class Ball
 
 		if(dist < (size + b.getSize()) && !inCollision){
 			inCollision = true;
-			xSpeed = -xSpeed;
-			ySpeed = -ySpeed;
+			xSpeed = -ySpeed;
+			ySpeed = -xSpeed;
 			
 			double tempXSpeed = b.getXSpeed();
 			double tempYSpeed = b.getYSpeed();
 
-			b.setXSpeed(-tempXSpeed);
-			b.setYSpeed(-tempYSpeed);
-			//there is a collision, change direction - should be according to angle of impact (later)
-			//for now, change the direction that was hit
-//			if(Math.abs(xPosition - b.getXPosition()) < (size + b.getSize()))
-//				xSpeed = - xSpeed;
-//			else
-//				ySpeed = - ySpeed;			
+			b.setXSpeed(-tempYSpeed);
+			b.setYSpeed(-tempXSpeed);
+	
+			//so if xPosition < b.xPosition then this ball is on the left
+			//if yPosition < b.yPosition then this ball is higher up, but we can treat that as normal and imagine we're looking at it the other way up!
+			//tan theta = opposite/adjacent
+			double theta = Math.atan((b.getYPosition()-yPosition)/(b.getXPosition()-xPosition));
+			//want the speeds to reflect in the normal of this line between centres
+			//so have existing xSpeed and ySpeed
+			//if xSpeed = 0, then the result would be mainly -xSpeed = ySpeed
+			
+			
+
+
+
+
 		}
 		else if(dist < (size + b.getSize()))
 			inCollision = false;
