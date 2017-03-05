@@ -94,6 +94,14 @@ public class Rectangle
 
 	/******************************************************/
 
+	/**
+	constructor - make a new Rectangle
+	@param x, the x-coordinate of the rectangle
+	@param y, the y-coordinate of the rectangle
+	@param w, the width of the rectangle
+	@param h, the height of the rectangle
+	@param col, a string representing the colour of the rectangle
+	*/
 	public Rectangle(double x, double y, double w, double h, String col)
 	{
 		xPosition = x;

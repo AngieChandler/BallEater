@@ -20,6 +20,7 @@ public class BallEaterGame{
 	private int maxLevel;
 	private int xSize ;
 	private int ySize;
+	private boolean stopGame = false;
 	
 	/**
 	constructor, sets up the BallEater game
@@ -69,7 +70,10 @@ public class BallEaterGame{
 			ballFactory.resetBalls();
 		}		
 				
-		while(ballFactory.checkCollision(eater)!=-1){
+		while(ballFactory.checkCollision(eater)!=-1 && !stopGame){
+			//game has been exited externally
+			if(stopGame)
+				break;
 			//start new level
 			if(ballFactory.checkCollision(eater)==0){
 				level++;
@@ -158,6 +162,16 @@ public class BallEaterGame{
 
 		arena.exit();
 				
+	}
+	
+	//stop game
+	public void stop(){
+		stopGame = true;
+
+		System.out.println("Game stopped, your score was "+score);
+
+		arena.exit();
+		
 	}
 	
 	/**

@@ -184,12 +184,15 @@ public class BallFactory{
 	/**
 	checks for collisions between Balls and responds to these collisions. Note that collisions between Balls do not obey proper laws of physics!
 	@param b, the Ball object to check against
+	@param index, the index in the array of Balls of this ball
 	*/
-	public void checkCollision(Ball b){
-		for(int i=0;i<maxBalls;i++){
-			if(!ball[i].equals(b) && !ball[i].getEaten())
-				b.collision(ball[i]);
-		}		
+	public void checkCollision(int index){
+		if(index<maxBalls){
+			for(int i=index+1;i<maxBalls;i++){
+				if(!ball[i].equals(ball[index]) && !ball[i].getEaten())
+					ball[index].collision(ball[i]);
+			}		
+		}
 	}
 	
 
@@ -234,7 +237,7 @@ public class BallFactory{
 		for(int i=0;i<maxBalls;i++){
 			if(!ball[i].getEaten()){
 				ball[i].bounce(arena.getArenaWidth(),arena.getArenaHeight());
-				checkCollision(ball[i]);
+				checkCollision(i);
 			}
 		}
 	

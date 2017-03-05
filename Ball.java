@@ -29,7 +29,8 @@ public class Ball
     private double friction = 0.9;
 
 	//ball state - whether this Ball has been eaten or not
-	private boolean isEaten; 
+	private boolean isEaten;
+	private boolean inCollision = false;
 	 
 	/**
 	 * Obtains the current position of this Ball.
@@ -77,7 +78,7 @@ public class Ball
 	}
 	/**
 	 * Obtains the size of this Ball.
-	 * @return the diameter of this Ball,in pixels.
+	 * @param size, the diameter of this Ball,in pixels.
 	 */
 	public void setSize(double size){
 		this.size = size;
@@ -103,7 +104,8 @@ public class Ball
 
 	/**
 	constructor for the Ball 
-	@param x,y, set the initial position of the Ball
+	@param x, set the initial x-coordinate of the Ball
+	@param y, set the initial y-coordinate of the Ball
 	@param diameter, the diameter of the Ball in pixels
 	@param col, a String representing the colour of the Ball
 	*/
@@ -137,6 +139,19 @@ public class Ball
     {
         ySpeed = speed;
     }
+	
+	/**gets the x speed of this Ball
+	@return the x speed
+	*/	
+	public double getXSpeed(){
+		return xSpeed;
+	}
+	/**gets the y speed of this Ball
+	@return the y speed
+	*/	
+	public double getYSpeed(){
+		return ySpeed;
+	}
 
 	/**
 	moves this Ball according to the current speed
@@ -149,7 +164,8 @@ public class Ball
 
 	/**
 	moves this Ball and checks for the edge of the GameArena 
-	@param maxX, maxY, the edges of the GameArena in pixels
+	@param maxX, the x edge of the GameArena in pixels
+	@param maxY, the y edge of the GameArena in pixels
 	*/
 	public void bounce(double maxX, double maxY)
 	{
@@ -176,14 +192,25 @@ public class Ball
 	public void collision(Ball b){
 		double dist = Math.sqrt((xPosition - b.getXPosition())*(xPosition - b.getXPosition()) + (yPosition - b.getYPosition())*(yPosition - b.getYPosition()));
 
-		if(dist < (size + b.getSize())){
+		if(dist < (size + b.getSize()) && !inCollision){
+			inCollision = true;
+			xSpeed = -xSpeed;
+			ySpeed = -ySpeed;
+			
+			double tempXSpeed = b.getXSpeed();
+			double tempYSpeed = b.getYSpeed();
+
+			b.setXSpeed(-tempXSpeed);
+			b.setYSpeed(-tempYSpeed);
 			//there is a collision, change direction - should be according to angle of impact (later)
 			//for now, change the direction that was hit
-			if(Math.abs(xPosition - b.getXPosition()) < (size + b.getSize()))
-				xSpeed = - xSpeed;
-			else
-				ySpeed = - ySpeed;			
-		}		
+//			if(Math.abs(xPosition - b.getXPosition()) < (size + b.getSize()))
+//				xSpeed = - xSpeed;
+//			else
+//				ySpeed = - ySpeed;			
+		}
+		else if(dist < (size + b.getSize()))
+			inCollision = false;
 	}
 
 
@@ -205,7 +232,8 @@ public class Ball
 
 	/**
 	applies gravity to this Ball when calculating movement, also detects the edge of the GameArena
-	@param maxX, maxY, the edges of the GameArena
+	@param maxX, the edge of the GameArena
+	@param maxY, the edge of the GameArena
 	*/
 	public void gravity(double maxX, double maxY)
 	{
@@ -229,6 +257,7 @@ public class Ball
 	}
 	/**
 	checks whether this Ball has been eaten
+	@return true if the Ball has been eaten
 	*/
 	public boolean getEaten(){
 		return isEaten;

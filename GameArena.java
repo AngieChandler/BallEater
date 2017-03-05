@@ -404,16 +404,19 @@ public class GameArena
 	
 	//extras for use in BallEater
 	/** for use in BallEater, determines if B was pressed
+	@return true if B is pressed, false otherwise
 	*/
 	public boolean boostPressed(){
 		return boost;
 	}
 	/** for use in BallEater, determines if J was pressed
+	@return true if J is pressed, false otherwise
 	*/
 	public boolean jumpPressed(){
 		return jump;
 	}
 	/** for use in BallEater, determines if P was pressed
+	@return true if P is pressed, false otherwise
 	*/
 	public boolean pausePressed(){
 		return pause;

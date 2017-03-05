@@ -53,6 +53,11 @@ public class BallEater
 	
 	/**
 	Constructor - creates an instance of the BallEater class
+	@param x, the initial x-coordinate of the BallEater
+	@param y, the initial y-coordinate of the BallEater
+	@param diameter, the diameter of the BallEater's body
+	@param bodyCol, String representing the colour of the BallEater's body 
+	@param eyeCol, String representing the colour of the BallEater's eyes
 	*/
 	public BallEater(double x, double y, double diameter, String bodyCol, String eyeCol){
 		this.x = x;
@@ -81,7 +86,7 @@ public class BallEater
 
 	/**
 	adds the BallEater elements to the GameArena
-	@param GameArena
+	@param arena, the GameArena used by this BallEater
 	*/
 	public void addToGameArena(GameArena arena){
 		this.arena = arena;
@@ -102,7 +107,7 @@ public class BallEater
 	
 	/**
 	Sets the colour of the body of this BallEater
-	@param String colour
+	@param colour, String representing the colour of the BallEater
 	*/
 	public void setColour(String colour){
 		body.setColour(colour);
@@ -171,7 +176,7 @@ public class BallEater
 	
 	/**
 	 * Updates the current speed of this BallEater
-	 * @param xSpeed the new x speed of this BallEater
+	 * @param ySpeed the new y speed of this BallEater
 	 */	
 	public void setYSpeed(double ySpeed){
 		this.ySpeed = ySpeed;
@@ -196,7 +201,8 @@ public class BallEater
 	}
 	
 	/** makes this BallEater move according to the current speed, and bounce if the edge is hit
-	@param maxX, maxY define the edge of the area
+	@param maxX, defines the edge of the area
+	@param maxY, defines the edge of the area
 	*/
 	public void bounce(double maxX,double maxY){
 		for(int i=0;i<6;i++){
