@@ -20,7 +20,7 @@ public class BallEaterGame{
 	private int maxLevel;
 	private int xSize ;
 	private int ySize;
-	private boolean stopGame = false;
+	private boolean playing = false;
 	
 	/**
 	constructor, sets up the BallEater game
@@ -46,12 +46,22 @@ public class BallEaterGame{
 		eater = new BallEater(30,30,20,eaterColour,"YELLOW");
 		eater.addToGameArena(arena);
 		
+		playing = true;
 	}
 
+
+//	/**
+//	allows external classes to get the arena panel
+//	@return arena
+//	*/
+//	public JComponent getPanel(){
+//		return this.arena;
+//	}
+	
 	/**
 	main game control - run the game until the BallEater collides with a Ball of the wrong colour and the game ends 
 	*/
-	public void play(){		
+	public void play(){	
 		int boostCounter = 100;
 		int boostRecharge = 0;
 
@@ -70,9 +80,9 @@ public class BallEaterGame{
 			ballFactory.resetBalls();
 		}		
 				
-		while(ballFactory.checkCollision(eater)!=-1 && !stopGame){
+		while(ballFactory.checkCollision(eater)!=-1 && playing){
 			//game has been exited externally
-			if(stopGame)
+			if(!playing)
 				break;
 			//start new level
 			if(ballFactory.checkCollision(eater)==0){
@@ -166,7 +176,7 @@ public class BallEaterGame{
 	
 	//stop game
 	public void stop(){
-		stopGame = true;
+		playing = false;
 
 		System.out.println("Game stopped, your score was "+score);
 

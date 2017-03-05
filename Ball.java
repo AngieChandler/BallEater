@@ -30,7 +30,7 @@ public class Ball
 
 	//ball state - whether this Ball has been eaten or not
 	private boolean isEaten;
-	private boolean inCollision = false;
+	public boolean inCollision = false;
 	 
 	/**
 	 * Obtains the current position of this Ball.
@@ -192,7 +192,7 @@ public class Ball
 	public void collision(Ball b){
 		double dist = Math.sqrt((xPosition - b.getXPosition())*(xPosition - b.getXPosition()) + (yPosition - b.getYPosition())*(yPosition - b.getYPosition()));
 
-		if(dist < (size + b.getSize()) && !inCollision){
+		if(dist < (size + b.getSize()) && !inCollision && !b.inCollision){
 			inCollision = true;
 			xSpeed = -ySpeed;
 			ySpeed = -xSpeed;
@@ -206,19 +206,16 @@ public class Ball
 			//so if xPosition < b.xPosition then this ball is on the left
 			//if yPosition < b.yPosition then this ball is higher up, but we can treat that as normal and imagine we're looking at it the other way up!
 			//tan theta = opposite/adjacent
-			double theta = Math.atan((b.getYPosition()-yPosition)/(b.getXPosition()-xPosition));
+			//double theta = Math.atan((b.getYPosition()-yPosition)/(b.getXPosition()-xPosition));
 			//want the speeds to reflect in the normal of this line between centres
 			//so have existing xSpeed and ySpeed
 			//if xSpeed = 0, then the result would be mainly -xSpeed = ySpeed
-			
-			
-
-
-
 
 		}
-		else if(dist < (size + b.getSize()))
+		else if(dist < (size + b.getSize())){
 			inCollision = false;
+			b.inCollision = false;
+		}
 	}
 
 
