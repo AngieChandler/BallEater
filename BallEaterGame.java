@@ -7,6 +7,8 @@
 	@author Angie Chandler
 
 */
+import javafx.embed.swing.JFXPanel;
+
 public class BallEaterGame{
 
 	private int score;
@@ -50,13 +52,13 @@ public class BallEaterGame{
 	}
 
 
-//	/**
-//	allows external classes to get the arena panel
-//	@return arena
-//	*/
-//	public JComponent getPanel(){
-//		return this.arena;
-//	}
+	/**
+	allows external classes to get the arena panel
+	@return arena
+	*/
+	public JFXPanel getPanel(){
+		return arena.getPanel();
+	}
 	
 	/**
 	main game control - run the game until the BallEater collides with a Ball of the wrong colour and the game ends 
