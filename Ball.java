@@ -194,15 +194,28 @@ public class Ball
 
 		if(dist < (size + b.getSize()) && !inCollision && !b.inCollision){
 			inCollision = true;
-			xSpeed = -ySpeed;
-			ySpeed = -xSpeed;
-			
 			double tempXSpeed = b.getXSpeed();
 			double tempYSpeed = b.getYSpeed();
 
-			b.setXSpeed(-tempYSpeed);
-			b.setYSpeed(-tempXSpeed);
-	
+			//if this ball is to the left
+			if(xPosition < b.getXPosition()){
+				xSpeed = -Math.abs(tempYSpeed);			
+				b.setXSpeed(Math.abs(ySpeed));
+			}
+			else{
+				xSpeed = Math.abs(tempYSpeed);			
+				b.setXSpeed(-Math.abs(ySpeed));				
+			}
+			if(yPosition < b.getYPosition()){
+				ySpeed = -Math.abs(tempXSpeed);
+				b.setYSpeed(Math.abs(xSpeed));
+			}
+			else{
+				ySpeed = -Math.abs(tempXSpeed);
+				b.setYSpeed(Math.abs(xSpeed));
+			}
+			
+			
 			//so if xPosition < b.xPosition then this ball is on the left
 			//if yPosition < b.yPosition then this ball is higher up, but we can treat that as normal and imagine we're looking at it the other way up!
 			//tan theta = opposite/adjacent
